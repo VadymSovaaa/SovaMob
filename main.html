@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Лента</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {margin:0;padding:0;background:#f5faff;font-family:'Segoe UI',Arial,sans-serif;}
+    .header {
+      height:60px;background:#25a244;display:flex;align-items:center;justify-content:center;
+      position:fixed;top:0;left:0;right:0;z-index:10;
+    }
+    .header svg {height:40px;}
+    .feed {
+      padding:80px 16px 80px 16px;
+      display:flex;flex-direction:column;gap:16px;
+      max-width:480px;margin:0 auto;
+    }
+    .post {
+      background:#fff;padding:14px 16px;border-radius:14px;
+      box-shadow:0 3px 12px #aadac655;
+    }
+    .post .author {
+      font-weight:bold;font-size:1.07rem;margin-bottom:6px;color:#222;
+    }
+    .post .text {
+      font-size:1rem;color:#444;margin-bottom:10px;
+    }
+    .post .actions {
+      display:flex;gap:14px;margin-top:6px;
+    }
+    .post .actions button {
+      background:none;border:none;cursor:pointer;font-size:1.1rem;color:#25a244;
+    }
+    .navbar {
+      position:fixed;bottom:0;left:0;right:0;height:60px;background:#fff;
+      border-top:1px solid #ddd;display:flex;justify-content:space-around;align-items:center;
+      z-index:10;
+    }
+    .navbar svg {width:28px;height:28px;fill:#25a244;}
+    .navbar button {
+      background:none;border:none;outline:none;cursor:pointer;
+    }
+    .logo-owl #owl-eye-right {
+      transform-origin:68px 40px;
+      animation:wink 5s infinite;
+    }
+    @keyframes wink {
+      0%,90%,100% { transform:scaleY(1);}
+      92%,96% { transform:scaleY(0.2);}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Верхняя панель с логотипом -->
+  <div class="header">
+    <svg viewBox="0 0 110 110" class="logo-owl" fill="none">
+      <circle cx="55" cy="55" r="52" fill="#25a244"/>
+      <ellipse cx="42" cy="40" rx="16" ry="18" fill="#fff"/>
+      <ellipse cx="68" cy="40" rx="16" ry="18" fill="#fff"/>
+      <ellipse cx="42" cy="40" rx="7" ry="7.5" fill="#232"/>
+      <ellipse id="owl-eye-right" cx="68" cy="40" rx="7" ry="7.5" fill="#232"/>
+      <ellipse cx="55" cy="73" rx="8" ry="5.5" fill="#f19d38"/>
+      <ellipse cx="55" cy="85" rx="16" ry="4" fill="#208e3a" opacity=".17"/>
+      <ellipse cx="55" cy="48" rx="3.6" ry="3.6" fill="#f19d38"/>
+      <ellipse cx="65" cy="38" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+      <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+    </svg>
+  </div>
+
+  <!-- Лента постов -->
+  <div class="feed" id="feed">
+    <div class="post">
+      <div class="author">SovaApp</div>
+      <div class="text">Добро пожаловать в новую социальную сеть!</div>
+      <div class="actions">
+        <button>❤️ 12</button>
+        <button>💬 4</button>
+      </div>
+    </div>
+    <div class="post">
+      <div class="author">Low</div>
+      <div class="text">Первая запись для теста, всем привет!</div>
+      <div class="actions">
+        <button>❤️ 7</button>
+        <button>💬 2</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Нижнее меню -->
+  <div class="navbar">
+    <button onclick="alert('Главная')">
+      <svg viewBox="0 0 24 24"><path d="M3 9.5l9-7 9 7V20a1 1 0 01-1 1h-5a1 1 0 01-1-1v-6H9v6a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg>
+    </button>
+    <button onclick="alert('Поиск')">
+      <svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 105.293 14.707l5 5a1 1 0 001.414-1.414l-5-5A8 8 0 0010 2z"/></svg>
+    </button>
+    <button onclick="alert('Создать пост')">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>
+    </button>
+    <button onclick="alert('Сообщения')">
+      <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-2.357.649A4.118 4.118 0 0020.5 9a8.27 8.27 0 01-2.605.996A4.107 4.107 0 0012 13.5V14a11.66 11.66 0 01-8.5-4.5A11.66 11.66 0 013.5 7.5c-.016.314-.024.629-.024.944A8.004 8.004 0 0012 16a8.003 8.003 0 007.996-7.5z"/></svg>
+    </button>
+    <button onclick="alert('Профиль')">
+      <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-5.33 0-8 2.667-8 4v2h16v-2c0-1.333-2.67-4-8-4z"/></svg>
+    </button>
+  </div>
+
+</body>
+</html>
