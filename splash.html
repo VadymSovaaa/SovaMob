@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      margin: 0; padding: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(120deg, #e5fff0 0%, #e9f4ff 100%);
+      overflow: hidden;
+    }
+    .sova-skate {
+      position: absolute;
+      left: -150px; top: 44vh;
+      width: 112px; height: 112px;
+      z-index: 2;
+      animation: skate-move 1.8s cubic-bezier(.75,.05,.33,1.02) 1 forwards;
+    }
+    @keyframes skate-move {
+      0%   { left: -150px; }
+      65%  { left: 53vw; transform: rotate(-8deg);}
+      82%  { left: 47vw; transform: rotate(8deg);}
+      100% { left: 38vw; transform: rotate(0deg);}
+    }
+    .sova-shadow {
+      position: absolute;
+      top: 63vh; left: 44vw;
+      width: 90px; height: 28px;
+      opacity: 0.19;
+      filter: blur(2.5px);
+      z-index: 1;
+      animation: shadow-move 1.8s cubic-bezier(.75,.05,.33,1.02) 1 forwards;
+    }
+    @keyframes shadow-move {
+      0%   { left: -100px; }
+      65%  { left: 54vw;}
+      82%  { left: 49vw;}
+      100% { left: 41vw;}
+    }
+    .logo-text {
+      position: absolute;
+      top: 24vh; left: 50%; transform: translateX(-50%);
+      font-size: 2.1rem;
+      color: #159243;
+      font-weight: bold;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      opacity: 0.85;
+      letter-spacing: 2.5px;
+      text-shadow: 0 2px 18px #fff, 0 1.5px 4px #beeec6a0;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-text">SovaApp</div>
+  <!-- СОВА НА СКЕЙТЕ (SVG) -->
+  <svg class="sova-skate" viewBox="0 0 110 110">
+    <circle cx="55" cy="53" r="50" fill="#25a244"/>
+    <!-- Глаза -->
+    <ellipse cx="42" cy="40" rx="16" ry="18" fill="#fff"/>
+    <ellipse cx="68" cy="40" rx="16" ry="18" fill="#fff"/>
+    <ellipse cx="42" cy="40" rx="7" ry="7.5" fill="#232"/>
+    <ellipse id="owl-eye-right" cx="68" cy="40" rx="7" ry="7.5" fill="#232"/>
+    <!-- Клюв -->
+    <ellipse cx="55" cy="52" rx="3.6" ry="3.6" fill="#f19d38"/>
+    <!-- СКЕЙТ -->
+    <rect x="28" y="85" rx="8" ry="10" width="55" height="14" fill="#303943"/>
+    <!-- Колеса -->
+    <circle cx="38" cy="99" r="5.6" fill="#828a92"/>
+    <circle cx="77" cy="99" r="5.6" fill="#828a92"/>
+    <circle cx="38" cy="99" r="3.1" fill="#222"/>
+    <circle cx="77" cy="99" r="3.1" fill="#222"/>
+    <!-- Блики -->
+    <ellipse cx="65" cy="38" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+    <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+  </svg>
+  <!-- Тень -->
+  <svg class="sova-shadow" viewBox="0 0 90 28">
+    <ellipse cx="45" cy="14" rx="40" ry="11" fill="#222"/>
+  </svg>
+  <script>
+    // Через 2 сек перейти на регистрацию (или главную)
+    setTimeout(() => {
+      window.location.href = "index.html"; // СЮДА ВСТАВЬ свой файл, куда перебрасывать после splash
+    }, 1700);
+  </script>
+</body>
+</html>
