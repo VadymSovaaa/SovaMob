@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Вход / Регистрация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0; padding: 0; background: #f5faff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    .splash-screen {
+      position: fixed; inset: 0; background: #f5faff;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; transition: opacity 0.6s;
+    }
+    .splash-screen.hide {
+      opacity: 0; pointer-events: none;
+    }
+    .owl-logo {
+      width: 120px; height: 120px;
+      animation: popIn 0.6s ease;
+    }
+    @keyframes popIn {
+      0% {transform: scale(0.7); opacity: 0;}
+      100% {transform: scale(1); opacity: 1;}
+    }
+    .owl-logo #owl-eye-right {
+      transform-origin: 68px 40px;
+      animation: wink 4.5s infinite;
+    }
+    @keyframes wink {
+      0%, 90%, 100% {transform: scaleY(1);}
+      93%, 97% {transform: scaleY(0.2);}
+    }
+    .main-content {
+      max-width: 400px;
+      margin: 100px auto 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    h1 {
+      margin: 20px 0 10px 0;
+      font-size: 1.8rem;
+      color: #149243;
+    }
+    .subtitle {
+      color: #669e81;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1.5px solid #c2e6d0;
+      background: #fafdff;
+      font-size: 1.15rem;
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: #2ac158;
+    }
+    .btn-green {
+      width: 100%;
+      padding: 15px 0;
+      border: none;
+      border-radius: 9px;
+      background: linear-gradient(90deg, #25a244 0%, #2ac158 100%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 8px;
+    }
+    .btn-green:hover {
+      background: #17913b;
+    }
+    .switch-link {
+      margin-top: 18px;
+      font-size: 1rem;
+      color: #149243;
+      text-decoration: underline;
+      cursor: pointer;
+      display: block;
+    }
+    .hidden { display: none; }
+    @media (max-width: 500px) {
+      .main-content {
+        margin: 60px 10px;
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Splash screen -->
+<div class="splash-screen" id="splash">
+  <svg class="owl-logo" viewBox="0 0 110 110" fill="none">
+    <circle cx="55" cy="55" r="52" fill="#25a244"/>
+    <ellipse cx="42" cy="40" rx="16" ry="18" fill="#fff"/>
+    <ellipse cx="68" cy="40" rx="16" ry="18" fill="#fff"/>
+    <ellipse cx="42" cy="40" rx="7" ry="7.5" fill="#232"/>
+    <ellipse id="owl-eye-right" cx="68" cy="40" rx="7" ry="7.5" fill="#232"/>
+    <ellipse cx="55" cy="73" rx="8" ry="5.5" fill="#f19d38"/>
+    <ellipse cx="55" cy="85" rx="16" ry="4" fill="#208e3a" opacity=".17"/>
+    <ellipse cx="55" cy="48" rx="3.6" ry="3.6" fill="#f19d38"/>
+    <ellipse cx="65" cy="38" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+    <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+  </svg>
+</div>
+
+<!-- Main window -->
+<div class="main-content hidden" id="mainContent">
+  <svg class="owl-logo" viewBox="0 0 110 110" fill="none">
+    <circle cx="55" cy="55" r="52" fill="#25a244"/>
+    <ellipse cx="42" cy="40" rx="16" ry="18" fill="#fff"/>
+    <ellipse cx="68" cy="40" rx="16" ry="18" fill="#fff"/>
+    <ellipse cx="42" cy="40" rx="7" ry="7.5" fill="#232"/>
+    <ellipse id="owl-eye-right" cx="68" cy="40" rx="7" ry="7.5" fill="#232"/>
+    <ellipse cx="55" cy="73" rx="8" ry="5.5" fill="#f19d38"/>
+    <ellipse cx="55" cy="85" rx="16" ry="4" fill="#208e3a" opacity=".17"/>
+    <ellipse cx="55" cy="48" rx="3.6" ry="3.6" fill="#f19d38"/>
+    <ellipse cx="65" cy="38" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+    <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+  </svg>
+
+  <form id="registerForm">
+    <h1>Добро пожаловать!</h1>
+    <div class="subtitle">Создайте аккаунт</div>
+    <div class="form-group"><input type="text" required placeholder="Ваше имя"></div>
+    <div class="form-group"><input type="email" required placeholder="Электронная почта"></div>
+    <div class="form-group"><input type="password" required placeholder="Пароль"></div>
+    <button type="submit" class="btn-green">Зарегистрироваться</button>
+    <span class="switch-link" onclick="toggleForms()">Уже есть аккаунт? Войти</span>
+  </form>
+
+  <form id="loginForm" class="hidden">
+    <h1>С возвращением!</h1>
+    <div class="subtitle">Введите данные</div>
+    <div class="form-group"><input type="email" required placeholder="Электронная почта"></div>
+    <div class="form-group"><input type="password" required placeholder="Пароль"></div>
+    <button type="submit" class="btn-green">Войти</button>
+    <span class="switch-link" onclick="toggleForms()">Нет аккаунта? Регистрация</span>
+  </form>
+</div>
+
+<script>
+  window.onload = () => {
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hide');
+      setTimeout(() => {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('mainContent').classList.remove('hidden');
+      }, 600);
+    }, 1300);
+  };
+
+  function toggleForms() {
+    document.getElementById('registerForm').classList.toggle('hidden');
+    document.getElementById('loginForm').classList.toggle('hidden');
+  }
+</script>
+
+</body>
+</html>
