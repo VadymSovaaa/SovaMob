@@ -94,8 +94,12 @@
       <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
     </svg>
     <!-- Форма регистрации -->
-    <form id="registerForm">
-      <h1>Добро пожаловать!</h1>
-      <div class="subtitle">Создайте аккаунт, чтобы войти в SovaApp</div>
-      <div class="form-group"><input required type="text" placeholder="Ваше имя"></div>
-      <div class="form-group"><input required type="email" placeholder="Электронная почта"></div
+     <form id="registerForm">
+       <h1>Добро пожаловать!</h1>
+       <div class="subtitle">Создайте аккаунт, чтобы войти в SovaApp</div>
+       <div class="form-group"><input required type="text" placeholder="Ваше имя"></div>
+       <div class="form-group"><input required type="email" placeholder="Электронная почта"></div>
+       <div class="form-group"><input required type="password" placeholder="Пароль"></div>
+       <button type="submit" class="btn-green">Зарегистрироваться</button>
+       <span class="switch-link" onclick="switchForm('login')">Уже есть аккаунт? Войти</span>
+     </form>
