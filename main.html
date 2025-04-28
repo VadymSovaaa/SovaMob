@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Лента</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {margin:0;padding:0;background:#f5faff;font-family:'Segoe UI',Arial,sans-serif;}
+    .app-header {
+      display:flex;align-items:center;gap:15px;padding:23px 18px 13px 18px;background:#fff;
+    }
+    .logo-owl {width:48px;height:48px;}
+    .app-title {font-size:2rem;font-weight:600;color:#149243;}
+    .feed {max-width:550px;margin:0 auto;padding-bottom:80px;}
+    .post-card {
+      background:#fff;border-radius:18px;box-shadow:0 3px 18px #9fd7b822;
+      padding:19px 19px 9px 19px;margin:18px 10px 0 10px;
+    }
+    .post-header {display:flex;align-items:center;gap:13px;margin-bottom:7px;}
+    .avatar {
+      background:#25a244;color:#fff;border-radius:50%;width:44px;height:44px;
+      font-weight:700;font-size:1.3rem;display:flex;align-items:center;justify-content:center;
+    }
+    .post-author {font-weight:600;color:#18874c;}
+    .post-time {margin-left:7px;color:#90a495;font-size:1rem;font-weight:400;}
+    .post-text {font-size:1.25rem;margin-bottom:11px;line-height:1.32;}
+    .post-img {
+      width:100%;max-width:100%;border-radius:11px;margin-bottom:10px;
+      background:#eef5f0;
+    }
+    .post-actions {
+      display:flex;gap:26px;margin-bottom:6px;margin-top:7px;
+    }
+    .post-actions button {
+      background:none;border:none;font-size:1.08rem;color:#149243;
+      display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 10px;
+      border-radius:8px;transition:background .17s;
+    }
+    .post-actions button.active, .post-actions button:active {
+      background:#e7fbe8;
+    }
+    .icon {font-size:1.28rem;display:inline-block;vertical-align:middle;}
+    /* Нижнее меню */
+    .bottom-nav {
+      position:fixed;z-index:20;bottom:0;left:0;right:0;background:#fff;
+      display:flex;justify-content:space-around;align-items:center;
+      height:62px;box-shadow:0 0 10px #90caf922;
+      border-top-left-radius:17px;border-top-right-radius:17px;
+      max-width:550px;margin:0 auto;left:50%;transform:translateX(-50%);
+    }
+    .nav-btn {
+      flex:1;display:flex;align-items:center;justify-content:center;height:62px;
+      font-size:1.9rem;color:#b8c8bb;cursor:pointer;transition:color .14s;
+      background:none;border:none;
+    }
+    .nav-btn.active {color:#149243;}
+    /* Экран-заглушка */
+    .section {display:none;}
+    .section.active {display:block;}
+    @media (max-width: 550px) {
+      .app-header, .feed {max-width:100%;}
+      .bottom-nav {max-width:100%;}
+    }
+  </style>
+</head>
+<body>
+  <div class="app-header">
+    <svg class="logo-owl" viewBox="0 0 110 110" fill="none">
+      <circle cx="55" cy="55" r="52" fill="#25a244"/>
+      <ellipse cx="42" cy="40" rx="16" ry="18" fill="#fff"/>
+      <ellipse cx="68" cy="40" rx="16" ry="18" fill="#fff"/>
+      <ellipse cx="42" cy="40" rx="7" ry="7.5" fill="#232"/>
+      <ellipse id="owl-eye-right" cx="68" cy="40" rx="7" ry="7.5" fill="#232"/>
+      <ellipse cx="55" cy="73" rx="8" ry="5.5" fill="#f19d38"/>
+      <ellipse cx="55" cy="85" rx="16" ry="4" fill="#208e3a" opacity=".17"/>
+      <ellipse cx="55" cy="48" rx="3.6" ry="3.6" fill="#f19d38"/>
+      <ellipse cx="65" cy="38" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+      <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+    </svg>
+    <span class="app-title">SovaApp</span>
+  </div>
+  <!-- Лента -->
+  <div id="section-feed" class="feed section active">
+    <div class="post-card">
+      <div class="post-header">
+        <span class="avatar">A</span>
+        <span class="post-author">Алина</span>
+        <span class="post-time">только что</span>
+      </div>
+      <div class="post-text">Добро пожаловать в SovaApp! Здесь будет появляться лента новостей и ваши посты.</div>
+      <div class="post-actions">
+        <button><span class="icon">❤️</span>Like</button>
+        <button><span class="icon">💬</span>Comment</button>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-header">
+        <span class="avatar">T</span>
+        <span class="post-author">Тестовый пользователь</span>
+        <span class="post-time">2 мин назад</span>
+      </div>
+      <div class="post-text">Это пример поста с картинкой для визуального теста. Дизайн полностью адаптирован под мобильные устройства.</div>
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=700&q=80" class="post-img">
+      <div class="post-actions">
+        <button><span class="icon">❤️</span>Like</button>
+        <button><span class="icon">💬</span>Comment</button>
+      </div>
+    </div>
+  </div>
+  <!-- Поиск -->
+  <div id="section-search" class="feed section">
+    <div style="text-align:center;color:#158e49;padding:50px 0 0 0;font-size:1.3rem;">
+      <div style="font-size:2.7rem;">🔍</div>
+      <div>Поиск в разработке</div>
+    </div>
+  </div>
+  <!-- Чаты -->
+  <div id="section-chats" class="feed section">
+    <div style="text-align:center;color:#158e49;padding:50px 0 0 0;font-size:1.3rem;">
+      <div style="font-size:2.7rem;">💬</div>
+      <div>Чаты скоро!</div>
+    </div>
+  </div>
+  <!-- Профиль -->
+  <div id="section-profile" class="feed section">
+    <div style="text-align:center;color:#158e49;padding:50px 0 0 0;font-size:1.3rem;">
+      <div style="font-size:2.7rem;">👤</div>
+      <div>Профиль в разработке</div>
+    </div>
+  </div>
+  <!-- Нижнее меню -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-section="feed" title="Лента">
+      <span class="icon">🏠</span>
+    </button>
+    <button class="nav-btn" data-section="search" title="Поиск">
+      <span class="icon">🔍</span>
+    </button>
+    <button class="nav-btn" data-section="chats" title="Чаты">
+      <span class="icon">💬</span>
+    </button>
+    <button class="nav-btn" data-section="profile" title="Профиль">
+      <span class="icon">👤</span>
+    </button>
+  </nav>
+  <script>
+    // Моргание совы
+    setInterval(() => {
+      const eye = document.getElementById('owl-eye-right');
+      if (eye) {
+        eye.style.transform = 'scaleY(0.23)';
+        setTimeout(()=>{eye.style.transform='scaleY(1)';}, 210);
+      }
+    }, 3200);
+
+    // Переключение экранов по меню
+    const navBtns = document.querySelectorAll('.nav-btn');
+    navBtns.forEach(btn => {
+      btn.onclick = () => {
+        navBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));
+        document.getElementById('section-'+btn.dataset.section).classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
