@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Лента</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { margin:0; padding:0; background:#f7faf7; font-family:'Segoe UI',Arial,sans-serif; }
+    .main-wrap { min-height:100vh; display:flex; flex-direction:column; }
+    .header {
+      height:64px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 2px 14px #21a04208;
+      position:relative;
+      z-index:2;
+    }
+    .logo-owl {
+      width:46px; height:46px;
+      display:block;
+      margin-top:6px;
+    }
+    .logo-owl #owl-eye-right { transform-origin:32px 18px; animation:wink 4.2s infinite; }
+    @keyframes wink {
+      0%, 85%, 100% { transform:scaleY(1);}
+      88%, 92% { transform:scaleY(0.18);}
+    }
+    .content-area {
+      flex:1;
+      padding:18px 0 62px 0;
+      min-height:320px;
+      background:#f7faf7;
+      display:flex;
+      justify-content:center;
+    }
+    .feed-box, .search-box, .chats-box, .profile-box {
+      width:100%;
+      max-width:420px;
+      margin:0 auto;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 4px 22px #e0f3e733, 0 1.5px 5px #cbe1cf22;
+      padding:22px 13px 19px 13px;
+      min-height:260px;
+      display:none;
+      position:relative;
+      animation:fadein .45s;
+    }
+    @keyframes fadein { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+    .feed-box.active, .search-box.active, .chats-box.active, .profile-box.active { display:block; }
+    .feed-title { font-size:1.32rem; color:#21a042; font-weight:600; margin-bottom:12px;}
+    .add-post-row { display:flex; margin-bottom:18px; }
+    .add-post-row input {
+      flex:1; font-size:1rem; border-radius:9px; border:1.2px solid #bee8cd;
+      padding:10px 11px; background:#f6faf8; outline:none; transition:border .14s;
+      margin-right:8px;
+    }
+    .add-post-row input:focus { border-color:#21a042;}
+    .add-post-btn {
+      background:#21a042;
+      border:none; color:#fff; border-radius:8px;
+      font-size:1.02rem; font-weight:500; padding:0 13px; cursor:pointer;
+      transition:background .17s;
+      min-width:44px; height:42px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .add-post-btn:hover { background:#158c38; }
+    .post-list { margin-top:6px; }
+    .post {
+      background:#eafae9;
+      border-radius:8px;
+      padding:12px 10px;
+      font-size:1.11rem;
+      margin-bottom:11px;
+      word-break:break-word;
+    }
+    /* Bottom nav */
+    .bottom-nav {
+      height:58px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-around;
+      box-shadow:0 -1px 8px #21a04217;
+      border-top-left-radius:18px;
+      border-top-right-radius:18px;
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:20;
+    }
+    .nav-btn {
+      flex:1; display:flex; align-items:center; justify-content:center;
+      height:100%;
+      border:none; outline:none; background:none;
+      cursor:pointer;
+      transition:background .14s;
+      border-radius:12px;
+      font-size:0;
+      position:relative;
+    }
+    .nav-btn.active,
+    .nav-btn:active {
+      background:#e5f7eb;
+    }
+    .nav-btn svg {
+      width:28px; height:28px;
+      fill:#9dcfb2; transition:fill .2s;
+      display:block;
+    }
+    .nav-btn.active svg { fill:#21a042;}
+    @media (max-width:480px) {
+      .main-wrap { min-height:100vh;}
+      .feed-box, .search-box, .chats-box, .profile-box { border-radius:0; max-width:100vw; }
+      .bottom-nav { border-radius:0;}
+      .content-area { padding:8px 0 62px 0;}
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrap">
+    <!-- HEADER -->
+    <div class="header">
+      <!-- SVG Logo Sova -->
+      <svg class="logo-owl" viewBox="0 0 56 44" fill="none">
+        <ellipse cx="28" cy="22" rx="24" ry="20" fill="#21a042"/>
+        <ellipse cx="16" cy="18" rx="8" ry="9" fill="#fff"/>
+        <ellipse cx="40" cy="18" rx="8" ry="9" fill="#fff"/>
+        <ellipse cx="16" cy="18" rx="3" ry="3" fill="#222"/>
+        <ellipse id="owl-eye-right" cx="40" cy="18" rx="3" ry="3" fill="#222"/>
+        <ellipse cx="28" cy="31" rx="4" ry="2.2" fill="#f19d38"/>
+      </svg>
+    </div>
+    <!-- CONTENT -->
+    <div class="content-area">
+      <!-- Feed -->
+      <div class="feed-box active" id="feedTab">
+        <div class="feed-title">Лента</div>
+        <form class="add-post-row" onsubmit="addPost(event)">
+          <input id="postInput" placeholder="Что нового?" maxlength="170" autocomplete="off">
+          <button class="add-post-btn" title="Отправить" type="submit">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M4 18L18 11L4 4V10L14 11L4 12V18Z"/>
+            </svg>
+          </button>
+        </form>
+        <div class="post-list" id="postList"></div>
+      </div>
+      <!-- Search -->
+      <div class="search-box" id="searchTab">
+        <div class="feed-title">Поиск</div>
+        <div style="text-align:center;color:#b2b2b2;margin-top:42px;font-size:1.13rem;">
+          Здесь будет поиск людей и групп.
+        </div>
+      </div>
+      <!-- Chats -->
+      <div class="chats-box" id="chatsTab">
+        <div class="feed-title">Чаты</div>
+        <div style="text-align:center;color:#b2b2b2;margin-top:42px;font-size:1.13rem;">
+          Здесь будут ваши чаты.
+        </div>
+      </div>
+      <!-- Profile -->
+      <div class="profile-box" id="profileTab">
+        <div class="feed-title">Профиль</div>
+        <div style="text-align:center;color:#b2b2b2;margin-top:42px;font-size:1.13rem;">
+          Здесь будет профиль пользователя.
+        </div>
+      </div>
+    </div>
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+      <button class="nav-btn active" id="feedNav" title="Лента">
+        <!-- Лента -->
+        <svg viewBox="0 0 28 28"><rect x="4" y="8" width="20" height="16" rx="5"/><rect x="8" y="4" width="12" height="6" rx="3"/></svg>
+      </button>
+      <button class="nav-btn" id="searchNav" title="Поиск">
+        <!-- Поиск -->
+        <svg viewBox="0 0 28 28"><circle cx="13" cy="13" r="8"/><rect x="19" y="19" width="6" height="2" rx="1" transform="rotate(45 19 19)"/></svg>
+      </button>
+      <button class="nav-btn" id="chatsNav" title="Чаты">
+        <!-- Чаты -->
+        <svg viewBox="0 0 28 28"><rect x="5" y="9" width="18" height="10" rx="5"/><ellipse cx="14" cy="19" rx="9" ry="3"/></svg>
+      </button>
+      <button class="nav-btn" id="profileNav" title="Профиль">
+        <!-- Профиль -->
+        <svg viewBox="0 0 28 28"><circle cx="14" cy="10" r="5"/><ellipse cx="14" cy="20" rx="8" ry="4"/></svg>
+      </button>
+    </div>
+  </div>
+  <script>
+    // Переключение вкладок
+    const tabs = [
+      {btn:'feedNav', box:'feedTab'},
+      {btn:'searchNav', box:'searchTab'},
+      {btn:'chatsNav', box:'chatsTab'},
+      {btn:'profileNav', box:'profileTab'},
+    ];
+    tabs.forEach((t, i) => {
+      document.getElementById(t.btn).onclick = () => {
+        tabs.forEach((tt, ii) => {
+          document.getElementById(tt.btn).classList.toggle('active', i === ii);
+          document.getElementById(tt.box).classList.toggle('active', i === ii);
+        });
+      };
+    });
+
+    // Посты (демо — localStorage)
+    function renderPosts() {
+      const list = document.getElementById('postList');
+      let posts = [];
+      try {
+        posts = JSON.parse(localStorage.getItem('sovaFeedPosts')||'[]');
+      } catch(e){}
+      list.innerHTML = posts.length ? posts.map(txt=>`<div class="post">${txt}</div>`).join('') : `<div style="color:#b2b2b2;text-align:center;">Нет постов</div>`;
+    }
+    function addPost(e) {
+      e.preventDefault();
+      const inp = document.getElementById('postInput');
+      const val = inp.value.trim();
+      if(!val) return;
+      let posts = [];
+      try {
+        posts = JSON.parse(localStorage.getItem('sovaFeedPosts')||'[]');
+      } catch(e){}
+      posts.unshift(val);
+      localStorage.setItem('sovaFeedPosts', JSON.stringify(posts));
+      inp.value = '';
+      renderPosts();
+    }
+    renderPosts();
+  </script>
+</body>
+</html>
