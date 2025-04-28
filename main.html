@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Лента</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {margin:0;padding:0;background:#f5faff;font-family:'Segoe UI',Arial,sans-serif;}
+    .header {
+      display:flex;align-items:center;gap:13px;padding:18px 16px 8px 16px;
+      background:#fff;box-shadow:0 2px 18px #90caf933;position:sticky;top:0;z-index:9;
+    }
+    .header-logo {
+      width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    }
+    .header-title {
+      font-size:1.54rem;font-weight:700;color:#21a254;letter-spacing:1px;
+      font-family:'Segoe UI',Arial,sans-serif;
+    }
+    /* Моргание совы */
+    .header-logo #owl-eye-right {
+      transform-origin: 27px 14px;
+      animation: wink 4.1s infinite;
+    }
+    @keyframes wink {
+      0%, 85%, 100% { transform: scaleY(1);}
+      89%, 92% { transform: scaleY(0.25);}
+    }
+    .feed {padding:17px 0 70px 0;max-width:500px;margin:0 auto;}
+    .feed-post {
+      background:#fff;border-radius:16px;box-shadow:0 2px 8px #ddeee833;
+      margin:0 10px 16px 10px;padding:17px 17px 14px 17px;display:flex;flex-direction:column;gap:8px;
+    }
+    .post-header {display:flex;align-items:center;gap:9px;}
+    .post-avatar {
+      width:37px;height:37px;border-radius:50%;background:#25a244;color:#fff;font-weight:700;
+      display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+      box-shadow:0 1px 6px #25a24415;
+    }
+    .post-author {font-weight:600;color:#19824a;}
+    .post-time {margin-left:8px;color:#7cae93;font-size:0.95rem;font-weight:400;}
+    .post-text {color:#232;font-size:1.14rem;line-height:1.36;}
+    .post-image {width:100%;border-radius:10px;margin-top:4px;}
+    .feed-form-wrap {
+      position:fixed;bottom:60px;left:0;width:100%;max-width:500px;margin:0 auto;
+      display:flex;justify-content:center;z-index:9;
+    }
+    .feed-form {
+      width:96%;background:#fff;border-radius:11px;box-shadow:0 2px 9px #7ecb9919;
+      display:flex;align-items:center;padding:5px 7px;
+    }
+    .feed-form input {
+      border:none;outline:none;font-size:1.12rem;padding:13px 7px;width:100%;
+      background:transparent;font-family:inherit;color:#242;
+    }
+    .feed-form button {
+      background:#21a254;border:none;border-radius:8px;color:#fff;font-weight:700;
+      padding:12px 22px;font-size:1.07rem;cursor:pointer;margin-left:6px;
+      transition:background .17s;
+    }
+    .feed-form button:hover {background:#188940;}
+    /* Нижнее меню только с иконками */
+    .bottom-nav {
+      position:fixed;bottom:0;left:0;width:100%;background:#fff;box-shadow:0 -1px 9px #97d7b611;
+      display:flex;align-items:center;justify-content:space-around;height:50px;z-index:11;
+      max-width:500px;margin:0 auto;
+    }
+    .nav-btn {
+      flex:1;text-align:center;background:none;border:none;outline:none;padding:0;cursor:pointer;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      color:#29a74d;transition:color .14s;
+      font-size:0.88rem;
+    }
+    .nav-btn.active svg { filter: drop-shadow(0 2px 4px #25a24419);}
+    .nav-btn svg {
+      width:27px;height:27px;display:block;margin-bottom:0;
+      transition:filter .19s;
+    }
+    .nav-btn.active {color:#0c7131;}
+    @media (max-width:500px) {
+      .feed,.bottom-nav,.feed-form-wrap {max-width:100%;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Шапка -->
+  <div class="header">
+    <div class="header-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" fill="#25a244"/>
+        <ellipse cx="13" cy="14" rx="6" ry="7" fill="#fff"/>
+        <ellipse cx="27" cy="14" rx="6" ry="7" fill="#fff"/>
+        <ellipse cx="13" cy="14" rx="2.7" ry="2.9" fill="#232"/>
+        <ellipse id="owl-eye-right" cx="27" cy="14" rx="2.7" ry="2.9" fill="#232"/>
+        <ellipse cx="20" cy="27" rx="4" ry="2.2" fill="#f19d38"/>
+        <ellipse cx="20" cy="33" rx="6.8" ry="1.2" fill="#208e3a" opacity=".17"/>
+      </svg>
+    </div>
+    <div class="header-title">SovaApp</div>
+  </div>
+
+  <!-- Лента -->
+  <div class="feed">
+    <div class="feed-post">
+      <div class="post-header">
+        <div class="post-avatar">А</div>
+        <div>
+          <span class="post-author">Алина</span>
+          <span class="post-time">только что</span>
+        </div>
+      </div>
+      <div class="post-text">Добро пожаловать в SovaApp! Здесь будет появляться лента новостей и ваши посты.</div>
+    </div>
+    <div class="feed-post">
+      <div class="post-header">
+        <div class="post-avatar">Т</div>
+        <div>
+          <span class="post-author">Тестовый пользователь</span>
+          <span class="post-time">2 мин назад</span>
+        </div>
+      </div>
+      <div class="post-text">Это пример поста с картинкой для визуального теста. Дизайн полностью адаптирован под мобильные устройства.</div>
+      <img class="post-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=80" alt="Example post image">
+    </div>
+    <!-- Здесь будут появляться другие посты -->
+  </div>
+
+  <!-- Форма добавления поста -->
+  <div class="feed-form-wrap">
+    <form class="feed-form" autocomplete="off">
+      <input type="text" placeholder="Что нового?" maxlength="240">
+      <button type="submit">Отправить</button>
+    </form>
+  </div>
+
+  <!-- Нижнее меню c иконками -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" title="Лента">
+      <svg fill="none" viewBox="0 0 26 26"><rect x="2" y="5" width="22" height="16" rx="4" fill="#21a254"/><rect x="7" y="9" width="12" height="8" rx="2" fill="#fff"/></svg>
+    </button>
+    <button class="nav-btn" title="Поиск">
+      <svg fill="none" viewBox="0 0 26 26"><circle cx="12" cy="12" r="7" stroke="#21a254" stroke-width="3"/><rect x="17" y="17" width="4" height="3" rx="1.5" fill="#21a254" transform="rotate(45 17 17)"/></svg>
+    </button>
+    <button class="nav-btn" title="Профиль">
+      <svg fill="none" viewBox="0 0 26 26"><circle cx="13" cy="9" r="5" fill="#21a254"/><rect x="6" y="16" width="14" height="6" rx="3" fill="#21a254"/></svg>
+    </button>
+  </div>
+</body>
+</html>
