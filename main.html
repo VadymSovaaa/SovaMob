@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SovaApp — Лента</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {margin:0;padding:0;background:#f8fafb;font-family:'Segoe UI',Arial,sans-serif;}
+    .app-header {
+      display: flex; align-items: center; gap: 13px;
+      padding: 19px 17px 16px 17px; background: #fff;
+      border-bottom: 1.5px solid #eaf1ee;
+    }
+    .logo-owl {width:46px;height:46px;}
+    .app-title {font-size:2.1rem;color:#149243;font-weight:600;letter-spacing:.02em;}
+    .feed {padding:19px 0 79px 0;}
+    .post-card {
+      background:#fff; border-radius:17px; margin:0 12px 18px 12px; box-shadow:0 2px 18px #b4e8c72c;
+      padding:19px 18px 11px 18px; display:flex; flex-direction:column; gap:9px; position:relative;
+      transition:box-shadow .19s;
+    }
+    .post-card:hover {box-shadow:0 4px 24px #a5dbc32b;}
+    .post-top {display:flex; align-items:center; gap:10px;}
+    .post-avatar {
+      width:40px; height:40px; background:#21a652; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.3rem; font-weight:700;
+      flex-shrink:0;
+    }
+    .post-userblock {display:flex; flex-direction:column;}
+    .post-username {font-weight:600; color:#149243; font-size:1.11rem; line-height:1.2;}
+    .post-time {color:#8fa39c; font-size:1.01rem;}
+    .post-text {margin:7px 0 0 0; font-size:1.18rem; color:#233;}
+    .post-image {
+      width:100%; border-radius:11px; margin:10px 0 0 0; max-height:235px; object-fit:cover; box-shadow:0 2px 10px #0001;
+      background:#e8f4eb;
+    }
+    .post-actions {
+      display:flex; align-items:center; gap:32px; margin:10px 0 0 0;
+      padding-bottom:4px;
+    }
+    .action-btn {
+      display:inline-flex; align-items:center; gap:7px; color:#29a542; font-weight:500;
+      font-size:1.14rem; cursor:pointer; user-select:none; background:0 0; border:none; outline:none; padding:3px 2px 3px 2px; border-radius:7px; transition:background .13s;
+    }
+    .action-btn:active {background:#e8f9ef;}
+    .icon {display:inline-block; vertical-align:middle;}
+    .icon-heart {
+      width:22px; height:22px; fill:#b6ccb7; transition:fill .18s, transform .22s;
+    }
+    .action-btn.liked .icon-heart {fill:#25a244; transform:scale(1.23);}
+    .icon-comment {width:22px; height:22px; fill:#149243;}
+    .icon-more {width:24px; height:24px; fill:#a3b8b2; margin-left:auto;}
+    /* Нижняя панель */
+    .bottom-nav {
+      position:fixed; left:0; right:0; bottom:0; z-index:10;
+      height:64px; background:#fff; border-top:1.5px solid #eaf1ee; display:flex; align-items:center; justify-content:space-around;
+      box-shadow:0 -1.5px 14px #81e7b016;
+    }
+    .nav-btn {
+      flex:1 1 0; display:flex; align-items:center; justify-content:center;
+      height:100%;
+      cursor:pointer; border:none; background:0 0; outline:none; padding:0;
+      transition:background .13s;
+    }
+    .nav-btn:active {background:#e8f7ef;}
+    .nav-icon {width:29px; height:29px; fill:#149243; opacity:0.86;}
+    .nav-btn.active .nav-icon {fill:#25a244; opacity:1;}
+    /* Сова моргает */
+    .logo-owl #owl-eye-right {transform-origin:68px 40px; animation:wink 4.5s infinite;}
+    @keyframes wink {0%, 88%, 100%{transform:scaleY(1);}91%, 93%{transform:scaleY(0.18);}}
+    @media (max-width:520px) {.app-title{font-size:1.45rem;}}
+    @media (max-width:440px) {.post-card{padding:13px 7px 8px 7px; margin:0 3px 14px 3px;}}
+  </style>
+</head>
+<body>
+  <div class="app-header">
+    <!-- ЛОГО СОВА -->
+    <svg class="logo-owl" viewBox="0 0 110 110" fill="none">
+      <circle cx="55" cy="55" r="52" fill="#25a244"/>
+      <ellipse cx="42" cy="40" rx="16" ry="18" fill="#fff"/>
+      <ellipse cx="68" cy="40" rx="16" ry="18" fill="#fff"/>
+      <ellipse cx="42" cy="40" rx="7" ry="7.5" fill="#232"/>
+      <ellipse id="owl-eye-right" cx="68" cy="40" rx="7" ry="7.5" fill="#232"/>
+      <ellipse cx="55" cy="73" rx="8" ry="5.5" fill="#f19d38"/>
+      <ellipse cx="55" cy="85" rx="16" ry="4" fill="#208e3a" opacity=".17"/>
+      <ellipse cx="55" cy="48" rx="3.6" ry="3.6" fill="#f19d38"/>
+      <ellipse cx="65" cy="38" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+      <ellipse cx="40" cy="36" rx="2" ry="2" fill="#fff" opacity="0.6"/>
+    </svg>
+    <div class="app-title">SovaApp</div>
+  </div>
+  <div class="feed">
+    <!-- Пост 1 -->
+    <div class="post-card">
+      <div class="post-top">
+        <div class="post-avatar" style="background:#25a244;">A</div>
+        <div class="post-userblock">
+          <div class="post-username">Алина</div>
+          <div class="post-time">только что</div>
+        </div>
+      </div>
+      <div class="post-text">Добро пожаловать в SovaApp! Здесь будет появляться лента новостей и ваши посты.</div>
+      <div class="post-actions">
+        <button class="action-btn" onclick="toggleLike(this)">
+          <svg class="icon icon-heart" viewBox="0 0 32 32"><path d="M16 28s-8.35-7.21-10.8-10.3C2.16 15.12 2 11.49 5.09 9.22 8.18 6.95 12.08 8.42 14.08 11c2-2.58 5.9-4.05 8.99-1.78 3.09 2.27 2.93 5.9-.11 8.48C24.35 20.79 16 28 16 28z"></path></svg>
+          <span>Like</span>
+        </button>
+        <button class="action-btn">
+          <svg class="icon icon-comment" viewBox="0 0 32 32"><path d="M4 28v-4.23C2.79 22.28 2 20.72 2 19c0-4.97 5.82-9 13-9s13 4.03 13 9-5.82 9-13 9c-1.07 0-2.11-.07-3.11-.2l-5.11 2.2z"></path></svg>
+          <span>Comment</span>
+        </button>
+        <svg class="icon icon-more" viewBox="0 0 32 32"><circle cx="8" cy="16" r="2.5"/><circle cx="16" cy="16" r="2.5"/><circle cx="24" cy="16" r="2.5"/></svg>
+      </div>
+    </div>
+    <!-- Пост 2 -->
+    <div class="post-card">
+      <div class="post-top">
+        <div class="post-avatar" style="background:#21a652;">Т</div>
+        <div class="post-userblock">
+          <div class="post-username">Тестовый пользователь</div>
+          <div class="post-time">2 мин назад</div>
+        </div>
+      </div>
+      <div class="post-text">Это пример поста с картинкой для визуального теста. Дизайн полностью адаптирован под мобильные устройства.</div>
+      <img class="post-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="image">
+      <div class="post-actions">
+        <button class="action-btn" onclick="toggleLike(this)">
+          <svg class="icon icon-heart" viewBox="0 0 32 32"><path d="M16 28s-8.35-7.21-10.8-10.3C2.16 15.12 2 11.49 5.09 9.22 8.18 6.95 12.08 8.42 14.08 11c2-2.58 5.9-4.05 8.99-1.78 3.09 2.27 2.93 5.9-.11 8.48C24.35 20.79 16 28 16 28z"></path></svg>
+          <span>Like</span>
+        </button>
+        <button class="action-btn">
+          <svg class="icon icon-comment" viewBox="0 0 32 32"><path d="M4 28v-4.23C2.79 22.28 2 20.72 2 19c0-4.97 5.82-9 13-9s13 4.03 13 9-5.82 9-13 9c-1.07 0-2.11-.07-3.11-.2l-5.11 2.2z"></path></svg>
+          <span>Comment</span>
+        </button>
+        <svg class="icon icon-more" viewBox="0 0 32 32"><circle cx="8" cy="16" r="2.5"/><circle cx="16" cy="16" r="2.5"/><circle cx="24" cy="16" r="2.5"/></svg>
+      </div>
+    </div>
+    <!-- Еще посты можно добавить по аналогии -->
+  </div>
+  <!-- Нижняя навигация -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active"><svg class="nav-icon" viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="13" rx="5"/><rect x="12" y="5" width="8" height="8" rx="4"/></svg></button>
+    <button class="nav-btn"><svg class="nav-icon" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" stroke="#25a244" stroke-width="2" fill="none"/><path d="M16 11v6l4 2" stroke="#25a244" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
+    <button class="nav-btn"><svg class="nav-icon" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" stroke="#25a244" stroke-width="2" fill="none"/><path d="M16 10v6h5" stroke="#25a244" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
+    <button class="nav-btn"><svg class="nav-icon" viewBox="0 0 32 32"><circle cx="16" cy="13" r="6" /><path d="M7 26c0-5 10-5 18 0" /></svg></button>
+  </nav>
+  <script>
+    // Анимация лайка (без хранения состояния, просто анимация)
+    function toggleLike(btn) {
+      btn.classList.toggle('liked');
+    }
+  </script>
+</body>
+</html>
